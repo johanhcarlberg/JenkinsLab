@@ -48,7 +48,7 @@ pipeline {
             post {
                 always {
                     dir("Selenium") {
-                        robot outputPath: '.', passThreshold: 80.0, unstableThreshold: 70.0, onlyCritical: false
+                        robot outputPath: 'results', passThreshold: 80.0, unstableThreshold: 70.0, onlyCritical: false
                     }
                 }
                 cleanup {
