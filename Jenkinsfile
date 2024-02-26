@@ -25,7 +25,7 @@ pipeline {
             post {
                 always {
                     dir("TrailRunner") {
-                        junit 'target/TEST**.xml'
+                        junit 'target/surefire-reports/*.xml'
                     }
                 }
             }
