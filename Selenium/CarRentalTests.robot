@@ -10,6 +10,7 @@ Library    DateTime
 Library    Collections
 
 *** Variables ***
+${browser}    chrome
 ${infotivCarRentalUrl}    http://rental14.infotiv.net/webpage/html/gui/
 ${carSelectionUrl}    http://rental14.infotiv.net/webpage/html/gui/showCars.php
 
@@ -277,7 +278,7 @@ Open Chrome browser and maximize
     [Documentation]    Suite setup keyword for opening and maximizing chrome and setting selenium speed
     [Tags]    suite-setup
     Set Selenium Speed    0.2
-    Open Browser    browser=Chrome
+    Open Browser    browser=${browser}
     Maximize Browser Window
 
 User is on Infotiv Car Rental website
