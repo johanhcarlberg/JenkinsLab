@@ -1,7 +1,7 @@
 pipeline {
     agent any
     stages {
-        Stage("Test") {
+        stage("Test") {
             echo "Testing"
             echo "Branch choice: ${params.Branch}"
         }
