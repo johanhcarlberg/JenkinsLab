@@ -9,6 +9,12 @@ pipeline {
                 git branch: "${params.Branch}", url: "${GIT_URL}"
             }
         }
+        stage("Build") {
+            steps {
+                dir("TrailRunner")
+                sh("ls -la")
+            }
+        }
         stage("Test") {
             steps {
                 echo "Testing"
