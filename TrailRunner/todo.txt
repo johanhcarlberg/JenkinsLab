@@ -1,0 +1,293 @@
+Lägg till dependencies i pom
+    Lagt till dependency för jacoco
+    Lagt till dependency för mockito
+    Lagt till dependency för JUnit
+    Lagt till jacoco build
+
+användare
+-------------------
+2024-01-03:
+Skapat fil för test för användare
+
+Krav - Skapa användare med längd och vikt
+    2024-01-03:
+    Skapat test för att skapa användare med längd och vikt. Testet kompilerar inte eftersom användarklassen inte är skapad.
+    Skapat användarklass med en konstruktor som tar emot längd och vikt men som har en tom implementering. 
+    Lagt till klassvariabler för längd och vikt utan värde. Testet failar eftersom längd och vikt inte har rätt värden.
+    Satt längd och vikt till hårdkodade värden som överensstämmer med testet. Testet är grönt.
+    Refaktorerat implementeringen genom att sätta height och weight i konstruktorn. Testet är fortfarande grönt.
+
+
+Krav - Beräkna användarens BMI
+    2024-01-03:
+    Skapat test för beräkning av BMI. Metod finns inte så filen kompileras inte.
+    Skapat tom metod för beräkning av BMI. Red test.
+    Insåg att metoden behöver returnera en double.
+    Lade till en return på hårdkodad rätt uträkning för BMI. Green test.
+    Lägger till formel för beräkning av BMI i metod. Behäver casta om height till en double. Red test
+    Castat om height till en double från int. Green test
+
+2024-01-03:
+    JaCoCo har 100% täckning på den nya koden.
+
+löprundor
+------------------
+Krav - Skall kunna skapa löprunda med distans (km), tid (timmar, minuter, sekunder), datum, år/månad/dag
+    Test
+    Skapat ny fil för löprundor (ActivityTest.java)
+    Skapat test för att skapa löprunda med ovanstående parametrar
+    Beslutar att lagra tid i sekunder
+    Undersöker hur vi skall lagra datum (Date-klass, Calendar, osv.) för att kunna jämföra
+    Beslutar att använda GregorianCalendar eftersom den ersatt konstruktorn för Date för år/månad/dag (Deprecated)
+    Skriver assertions för distans, tid och datum
+    Testet kompilerar inte eftersom Activity-klassen inte existerar. (Rött test)
+
+    Code under test
+    Skapar ny Activity-klass
+    Lägger in variabler för distance (double), time (int) och date (Date).
+    Skapar en tom konstruktor för Activity med parametrar som motsvarar ovanstående fält.
+    Inser att GregorianCalendar inte kan konverteras direkt till Date. Ändrar från Date till Calendar.
+    Kör testet igen, testet kompilerar men failar eftersom fälten inte har några värden.
+    Lägger in fasta värden på fälten som motsvarar testdatan. Kör testet igen, testet är grönt.
+
+    Refaktorering
+    Skriver om konstruktorn så att den sätter variablerna till värdet på parametrarna.
+    Kör testet igen, fortfarande grönt.
+    Inser att det kanske finns en klass för att representera tid bättre än int, letar runt och hittar Duration som verkar motsvara kraven.
+    Ändrar time-variabeln till Duration. Testet failar eftersom klassen inte kompilerar längre.
+    Ändrar i konstruktorn till att skapa ett nytt Duration-objekt genom ofSeconds-metoden. Testet failar eftersom testet förväntar sig en integer.
+    Ändrar i testet så att det jämför mot time.getSeconds. Testet är grönt.
+
+    Extra:
+    Skapa fler konstruktorer som kan hantera att man lägger in timmar/minuter/sekunder för tid
+    Skapar ett nytt test för att skapa aktivitet med timmar/minuter/sekunder för tiden. Testet kompilerar inte eftersom konstruktorn inte finns.
+    Skapar ny konstruktor för Activity med tre int-parametrar som representerar tid (hours, minutes, seconds). Sätter time till ett nytt Duration-objekt med
+    den hårdkodade tiden i sekunder från testdatan. Testet blir grönt.
+    Ändrar konstruktorn så att den använder en tempTime-variabel av typen Duration som skapas från hours-parametern (Duration.ofHours).
+    Använder sedan tempTime.plusMinutes och plusSeconds för att lägga till minuter och sekunder från parametrarna till tempTime. Testet är fortfarande grönt.
+    Går tillbaka till att beräkna medelhastighet nu när det finns en konstruktor som hanterar timmar/minuter/sekunder.
+
+
+Krav - Varje löprunda skall ha ett unikt id-nummer (string)
+    Skapar test för att tilldela Id. 
+    Då det inte finns en Id så kompileras inte testet.
+    Skapar en String variabel för Id (röd test) och sätter den till ett fast värde (grönt test). 
+    Skapar en statisk variabel för att räkna upp Id. 
+    En ny aktivitet tilldelas ett värde som sedan räknas upp och nästa aktivitet får följande nummer.
+    Vi skapar en till activity i vårat test för att säkerställa att följande aktiviteter får unika Id. Testet är grönt.
+
+
+Krav - Varje löprunda skall automatiskt beräkna medelhastighet
+    Skapar test för att beräkna medelhastighet. 
+    Inser att det hade underlättat att arbeta i timmar/minuter/sekunder, går tillbaka till konstruktorn för aktivitet för att kunna skapa
+    aktiveter med timmar, minuter och sekunder.
+    Testet kompilerar inte eftersom metoden för att hämta medelhastighet inte finns. Testet är rött.
+    Skapar en metod i Activity som returnerar medelhastigheten som en double.
+    Testet kompilerar inte eftersom metoden är tom.
+    Lägger till ett return-statement som returnerar 1 (samma som testdatan), testet är grönt.
+    
+    Refaktorering
+    Ändrar metoden som beräknar medelhastighet så att den räknar ut medelhastigheten från tiden och distansen av aktiviteten. Testet är fortfarande grönt.
+    Ändrar från att använda getSeconds()/3600 till toHours(). Testet är fortfarande grönt.
+
+Extra/idéer:
+Lägg till konstruktor som kan ta emot Duration-objekt.
+
+
+Krav - Varje löprunda skall automatiskt beräkna kilometer-tid
+    Test
+    Skapar ett test för att beräkna kilometer-tid. Testet kompilerar inte eftersom metoden inte finns.
+    Skapar metod som returnerar ett duration-objekt som representerar kilometertiden. Metoden returnerar ett duration objekt som motsvarar testdatan. Testet är grönt.
+    
+
+    Refaktorering
+    Byter ut värdet i metoden mot en uträkning för tid i minuter delad på distansen. 
+    Byter ut det jämförda värdet i våran assertion mot det sparade värdet konverterat till minuter. Testet är grönt
+    Ändrar metodens return till svaret på uträkningen i sekunder. Testet är grönt.
+    Byter namn på metoden till calculatePace. 
+    
+
+
+Krav - Det skall gå att beräkna total distans för samtliga löprundor
+    Skapar ett test för att beräkna totala distansen för två löprundor (1 och 4 km).
+    Förväntar sig att metoden returnerar 5.0.
+    Testet failar eftersom metoden inte finns (kompilerar inte).
+
+    Skapar en metod i ActivityManager för att beräkna den totala distansen.
+    Metoden returnerar statiskt 5.0, testet är grönt.
+
+    Refaktorering:
+    Skriver om metoden så att den loopar igenom aktiviteterna och beräknar summan av distansen. Testet är fortfarande grönt.
+
+Krav - Det skall gå att beräkna medeldistans för samtliga löprundor
+    Skapat ett test för att kontrollera medeldistansen för samtliga löprundor.
+    Testet skapar två aktiviteter med distans 1 och 4 km och kontrollerar att medeldistansen som returneras från averageDistance är
+    2.5.
+    Testet failar eftersom det inte kompilerar då metoden inte finns.
+    Skapar metoden averageDistance som returnerar 0, testet failar eftersom det förväntar sig 2.5.
+    Ändrar return-statement till att returnera 2.5, testet är grönt.
+
+    Refaktorering
+    Ändrar metoden så att den hämtar totala distansen via totalDistance-metoden och dividerar det med storleken på activities-mapen.
+    Testet är fortfarande grönt.
+
+Krav - Det skall gå att printa ut detaljerna för en löprunda genom att ange korrekt id-nummer
+    Skapar test för att kontrollera att toString på activity skriver ut rätt detaljer. Testet failar eftersom toString inte har overridats.
+    Testet delar upp strängen från toString på newline till en array.
+    Testet jämför varje rad med förväntad data, testet failar eftersom formateringen inte stämmer överens.
+    Ändrar formateringen för att matcha mellan test och implementering, testet är grönt.
+
+Krav - Det skall gå att radera en löprunda genom att ange dess identifikationsnummer.
+    Skapar test för att ta bort löprunda. Testet lägger först till två aktiviteter, tar bort den ena och kontrollerar att storleken är 1.
+    Testet kompilerar inte och failar eftersom metoden inte skapats.
+    Skapar metod i ActivityManager för att ta bort Activity-objekt från mapen.
+    Testet är grönt.
+
+
+Krav - Löprundorna kan sparas lokalt i arbetsminnet, i t.ex. en Array eller en Collection (Map)
+    Test
+    Skapar ett test som skapar en ActivityManager som skall innehålla en map.
+    Testet kontrollerar att storleken på mapen är 0.
+    Testet kompilerar inte eftersom klassen ActivityManager inte finns ännu.
+    
+    Skapar klassen ActivityManager. Testet kompilerar fortfarande inte eftersom variabeln activities inte finns.
+    Lägger till en variabel av typen Map<String, Activities> i ActivityManager. Testet failar eftersom variabeln är null.
+    Initialiserar activities-mapen till en ny HashMap. Testet är grönt.
+
+    Refaktorering
+    Flyttar initialiseringen av activities-mapen till en konstruktor för ActivityManager. Testet är fortfarande grönt.
+
+    Att göra:
+    Skriva test för att lägga till activity i mapen.
+        Skapar ett test för att lägga till activity i activities-mapen. Testet skapar en ActivityManager och en Activity och försöker
+        lägga till aktiviteten i mapen. Testet kontrollerar att storleken på mapen är 1 efter att aktiviteten lagts till.
+        Testet failar.
+        Skapar metoden addActivity som tar in en Activity som parameter. Metoden anropar put() på activities-mapen.
+        Testet är grönt.
+
+    Skriva test för att hämta activity från map genom id-sträng
+        Skapar ett test för att hämta Activity från activities-mapen i ActivityManager. 
+        Testet kontrollerar att aktiviteten som hämtas är samma som lagts till genom att jämföra värden på variablerna.
+        Testet failar eftersom det inte kompilerar då metoden för att hämta aktivitet inte finns.
+        Inser att vi antagligen vill lägga till id som en parameter i konstruktorn på Activity och flytta id-hanteringen till 
+        ActivityManager. Vi kanske också vill ha ett test som jämför två aktiviteter och ser om de är lika utifrån innehållet.
+        Skapat metod för att hämta aktivitet. Metoden tar en sträng som parameter för aktivitetens id och anropar get() på 
+        activities-mapen. Metoden returnerar en Activity. Testet är grönt.
+
+    Lägg till id i konstruktor för Activity
+        Test
+        Skapar test för att skapa aktivitet med manuellt angivet id.
+        Testet kompilerar inte eftersom det inte finns någon konstruktor som tar in id som parameter.
+        Skriver en konstruktor som tar in id som parameter, testet är grönt.
+
+    Flytta id-hantering till ActivityManager
+        Börjar med att kopiera statiska id-variabeln till ActivityManager.
+        Skapar test för att hämta nästa id från ActivityManager. Förväntar sig ett id på "1".
+        Testet kompilerar inte eftersom metoden för att hämta id inte finns.
+        Implementerar en metod för att hämta nästa id som returnerar "1". Testet blir grönt.
+        Lägger till en assertion för att id skall inkrementeras. Testet blir rött.
+        Ändrar metoden till att returnera idCounter++ som sträng, testet blir grönt.
+
+        Lägger till en assert i testet för att skapa en aktivitet med id för en aktivitet med konstruktorn som hanterar timmar, minuter och sekunder men som också tar in id.
+        Testet kompilerar inte längre eftersom den konstruktorn inte finns.
+        Lägger till en konstruktor som hanterar id, timmar, minuter och sekunder.
+        Tar bort konstruktorer som inte har id, test failar nu i ActivityTest-filen.
+        Ändrar i ActivityTest så att samtliga test skapar aktiviteter med id. Testen blir gröna.
+        Tar bort idCounter från Activity, testen är fortfarande gröna.
+        Testen i ActivityManagerTest är nu röda eftersom den inte skapar aktiviteter med id.
+        Ändrar i testen i ActivityManagerTest så att de använder konstruktorer med id, testen är nu gröna.
+
+        Skapar ett test för att skapa aktiviteter med autogenererat id från ActivityManager.
+        Testet kontrollerar att två aktiviteter som hämtar id från getNextActivityId får rätt id.
+
+    Skriva test för att kontrollera att det inte går att lägga till aktiviteter med samma id
+        Skapar ett test som kontrollerar att addActivity kastar ett illegalargumentexception när man lägger till två aktiviteter med samma id.
+        Testet failar eftersom metoden addActivity inte kastar ett exception när två aktiviteter med samma id läggs till.
+        Skriver implementation i addActivity som kollar om Mapen innehåller id som key, kastar i så fall ett IllegalArgumentException. Testet är grönt.
+
+    Skriva test för att kunna ändra vikt och längd
+        Lägger till ett test i UserTest för att ändra vikt och längd, testet blir grönt direkt då variablerna är publika.
+
+    När vi kör samtliga test i ActivityManagerTest failar ett av testen (testet som kollar getNextActivityId). Inser att vi inte längre behöver ha en statisk id-counter
+    och att den ställer till det med testen när man kör alla test.
+    Tar bort static från idCounter, testen är gröna.
+
+    ---------------------
+
+    Mockning av api för databas
+
+    Skapar en ny klass för tester mot databasen (ActivityControllerTest)
+        Skapar test för att lägga till aktiviteter
+        I testet skapas en mock-databas genom att använda mock-metoden från mockito med DatabaseAPI-klassen som argument.
+        Testet skapar en ny instans av ActivityController och skickar med databas-objektet.
+        Testet mockar createRecord från DatabaseAPI genom att använda when och thenReturn-metoderna från mockito.
+        Testet anropar addActivity från ActivityController för att lägga till en aktivitet
+        Testet kontrollerar att createRecord har anropats med korrekta parametrar genom verify-metoden från mockito.
+
+        Testet failar eftersom ActivityController inte är implementerad.
+        Skapar ActivityController-klassen med en konstruktor som tar emot ett DatabaseAPI-objekt. Testet kompilerar fortfarande inte eftersom addActivity-metoden inte finns.
+        Skapar en tom addActivity-metod som tar emot ett Activity-objekt som parameter. Testet kompilerar men är rött eftersom metoden inte anropar DatabaseAPI.
+        Lägger till en instansvariabel för att lagra DatabaseAPI-objektet och tilldelar variabeln i konstruktorn. Lägger till anrop till createRecord i addActivity.
+        Testet är nu grönt.
+
+    Skapar test för att hämta aktiviteter från databasen med hjälp av id.
+        Inser att det kan vara bra att skapa en setup-metod för det mockade databas-objektet.
+            Skapar en privat variabel för databas-objektet.
+            Skapar en setup-metod med @beforeAll-annotering som skapar ett nytt mockat databas-objekt och tilldelar det till variabeln ovan.
+        Fortsätter med att skapa testet, skriver en when..thenReturn-sats för readRecord som returnerar en aktivitet baserat på id.
+        Inser att databas-api-klassen använder Record. Verkar inte som att java 1.8 har fullt stöd för records, uppdaterar java-version i pom.
+        Skapar ny testklass för att skapa test att skapa ActivityRecord.
+            Skapar ny record-klass ActivityRecord.
+            Testet för att skapa ActivityRecord failar eftersom konstruktorn för ActivityRecord inte stämmer.
+            Uppdaterar konstruktorn för ActivityRecord så att det motsvarar testdatan, testet kompilerar inte för att jag försöker använda variabelnamn istället för
+            de autoskapade getter-metoderna från record.
+            Ändrar till att använda getter-metoder, testet är grönt.
+        Går tillbaka till testet för readRecord, ändrar så att thenReturn returnerar ett ActivityRecord.
+        Testet kompilerar fortfarande inte eftersom metoden för att hämta Activity från databasen inte finns i ActivityController.
+        Skapar metoden getActivityById i ActivityController, returnerar en statiskt skapad aktivitet, testet är fortfarande rött eftersom testet kontrollerar 
+        att metoden i databas-api-klassen har anropats, vilket den inte har i nuläget.
+        Ändrar i getActivityById så att den anropar metoden i DatabaseAPI-klassen.
+        Ändrar i getActivityById så att den skapar ett Activity-objekt utifrån ActivityRecord-objektet som hämtas från databasen.
+        Testet är nu grönt.
+
+    Skapar test för att hämta alla id på aktiviteter.
+        Skapar en lista med id som skall returneras, lägger till två id i den.
+        Lägger till listan i thenReturn().
+        Lägger till ett anrop till en metod i ActivityController som hämtar alla id på aktiviteter.
+        Lägger till en verify-sats som kollar att getRecordIDs har anropats i DatabaseAPI-klassen.
+        Lägger till två assertTrue som anropar .contains() på listan som hämtats från databasen för att kolla att innehållet är korrekt.
+        Testet kompilerar inte eftersom metoden i ActivityController inte finns.
+        Skapar metoden i ActivityController, returnerar en lista med idn med hjälp av Arrays.asList. Testet är rött eftersom metoden i DatabaseAPI inte anropas.
+        Ändrar metoden i ActivityController så den returnerar värdet från getRecordIDs i DatabaseAPI. Testet är grönt.
+    
+    Skapar test för att ta bort aktivitet ur databasen.
+        Testet kontrollerar att deleteRecord har anropats.
+        Testet anropar deleteActivity i ActivityController.
+        Testet kompilerar inte eftersom metoden i ActivityController inte finns.
+        Skapar metoden i ActivityController, testet kompilerar men är rött eftersom metoden inte anropar metod i DatabaseAPI.
+        Lägger till anrop till DatabaseAPI, testet är grönt.
+
+    Skapar test för att filtrera aktiviteter baserat på distans
+        Testet har en lista med id och en lista med ActivityRecord. 
+        Listan med id används i thenReturn när getRecordIDs anropas.
+        Listan med ActivityRecord används när readRecord anropas genom att använda Answer-klassen i mockito. Använder override av answer-metoden 
+        för att returnera ett ActivityRecord ur listan baserat på id som skickas in med hjälp av anyString(). 
+        Testet hämtar sedan den filtrerade listan genom metoden getActivitiesByDistance
+        Testet använder assertEquals för att jämföra storleken på listan från getActivitiesByDistance med förväntat resultat.
+        Testet verifierar att både getRecordIDs och readRecord har anropats, det förväntar sig också att readRecord anropats så många gånger som det finns ActivityRecords i listan.
+        Testet kompilerar inte eftersom metoden getActivitiesByDistance inte finns.
+        Skapar metoden och returnerar en tom lista. Testet är rött eftersom det inte anropar databasen.
+        Lägger till hämtning av id genom anrop till getRecordIDs, testet är fortfarande rött eftersom readRecord inte anropas.
+        Ändrar i answer-metoden så att den använder filter och findAny för att hämta rätt ActivityRecord från listan.
+        Testet är fortfarande rött eftersom metoden bara anropar readRecord och getRecordIDs utan att göra något med resultatet, därav är listan som kommer tillbaka fortfarande tom.
+        Lägger till assertion som kontrollerar att de returnerade aktiviteterna faktiskt har rätt distans.
+        Returnerar en lista med två manuellt skapade aktiviteter där en av distanserna är fel, testet är rött och klagar på att den bara har en aktivitet som uppfyller distansen.
+        Ändrar distansen på en av aktiviteterna som returneras så att båda uppfyller kravet, testet är grönt.
+        
+        Refaktorerar getActivitiesByDistance så att den filtrerar det faktiska resultatet från databasen.
+            Lägger till ActivityRecords som hämtas i en egen lista.
+            Använder stream() på ovanstående lista för att först anropa map() för att göra om ActivityRecords till Activity, sedan filter() för att filtrera distans
+            slutligen collect() för att konvertera till en lista. Resultatet returneras. Testet är grönt.
+
+    Ändrar setup-metoden från beforeAll till beforeEach eftersom det verkar bli något strul när man kör alla tester istället för
+    individuella tester när man skapar db-objektet i beforeAll.

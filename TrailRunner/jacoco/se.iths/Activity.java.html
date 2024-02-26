@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Activity.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">trailrunner</a> &gt; <a href="index.source.html" class="el_package">se.iths</a> &gt; <span class="el_source">Activity.java</span></div><h1>Activity.java</h1><pre class="source lang-java linenums">package se.iths;
+
+import java.time.Duration;
+import java.util.Calendar;
+import java.text.SimpleDateFormat;
+
+public class Activity {
+    double distance;
+    Duration time;
+    Calendar date;
+    String id;
+
+<span class="fc" id="L13">    public Activity(String id, double distance, int seconds, Calendar date) {</span>
+<span class="fc" id="L14">        this.id = id;</span>
+<span class="fc" id="L15">        this.distance = distance;</span>
+<span class="fc" id="L16">        this.time = Duration.ofSeconds(seconds);</span>
+<span class="fc" id="L17">        this.date = date;</span>
+<span class="fc" id="L18">    }</span>
+
+<span class="fc" id="L20">    public Activity(String id, double distance, int hours, int minutes, int seconds, Calendar date){</span>
+<span class="fc" id="L21">        Duration tempTime = Duration.ofHours(hours);</span>
+<span class="fc" id="L22">        tempTime = tempTime.plusMinutes(minutes);</span>
+<span class="fc" id="L23">        tempTime = tempTime.plusSeconds(seconds);</span>
+<span class="fc" id="L24">        this.distance = distance;</span>
+<span class="fc" id="L25">        this.time = tempTime;</span>
+<span class="fc" id="L26">        this.date = date; </span>
+<span class="fc" id="L27">        this.id = id;</span>
+<span class="fc" id="L28">    }</span>
+
+    public double averageSpeed() {
+<span class="fc" id="L31">        return distance/(time.toHours());</span>
+    }
+
+    public Duration calculatePace() {
+<span class="fc" id="L35">        double seconds = time.getSeconds() / distance;</span>
+<span class="fc" id="L36">        return Duration.ofSeconds((long) seconds);</span>
+    }
+
+    @Override
+    public String toString() {
+        
+<span class="fc" id="L42">        String returnString = &quot;&quot;;</span>
+<span class="fc" id="L43">        returnString += &quot;Distance: &quot; + distance + &quot;km\n&quot;;</span>
+<span class="fc" id="L44">        returnString += &quot;Duration: &quot; + time.toHoursPart() + &quot; hour, &quot; + time.toMinutesPart() + &quot; minutes, &quot; + time.toSecondsPart() + &quot; seconds.\n&quot;;</span>
+<span class="fc" id="L45">        SimpleDateFormat sdf = new SimpleDateFormat(&quot;yyyy-MM-dd&quot;);</span>
+<span class="fc" id="L46">        returnString += &quot;Date: &quot; + sdf.format(date.getTime()) + &quot;\n&quot;;</span>
+<span class="fc" id="L47">        returnString += &quot;Average speed: &quot; + averageSpeed() + &quot;km/h\n&quot;;</span>
+<span class="fc" id="L48">        returnString += &quot;Pace: &quot; + calculatePace().toMinutes() + &quot;:&quot; + calculatePace().toSecondsPart() + &quot;min/km&quot;;</span>
+<span class="fc" id="L49">        return returnString;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
