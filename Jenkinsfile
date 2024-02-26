@@ -18,8 +18,9 @@ pipeline {
         }
         stage("Test") {
             steps {
-                echo "Testing"
-                echo "Branch choice: ${params.Branch}"
+                dir("TrailRunner") {
+                    sh("mvn test")
+                }
             }
         }
     }
