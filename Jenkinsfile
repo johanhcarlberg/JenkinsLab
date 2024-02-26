@@ -28,6 +28,13 @@ pipeline {
                         junit 'target/surefire-reports/*.xml'
                     }
                 }
+                success {
+                    dir("TrailRunner") {
+                        jacoco{
+                            execPattern('target/*.exec')
+                        }
+                    }
+                }
             }
         }
     }
