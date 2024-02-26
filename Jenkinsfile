@@ -11,8 +11,9 @@ pipeline {
         }
         stage("Build") {
             steps {
-                dir("TrailRunner")
-                sh("ls -la")
+                dir("TrailRunner") {
+                    sh("ls -la")
+                }
             }
         }
         stage("Test") {
