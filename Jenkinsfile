@@ -30,8 +30,10 @@ pipeline {
                 }
                 success {
                     dir("TrailRunner") {
-                        jacoco{
-                            execPattern('target/*.exec')
+                        jacoco {
+                            execPattern: '**/target/*.exec',
+                            classPattern: '**/target/classes/se/iths',
+                            sourcePattern: '**/src/main/java/se/iths'
                         }
                     }
                 }
