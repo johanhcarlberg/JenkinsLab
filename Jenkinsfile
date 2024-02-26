@@ -22,11 +22,11 @@ pipeline {
                     sh("mvn test")
                 }
             }
-        }
-        post {
-            always {
-                dir("TrailRunner") {
-                    junit 'target/TEST**.xml'
+            post {
+                always {
+                    dir("TrailRunner") {
+                        junit 'target/TEST**.xml'
+                    }
                 }
             }
         }
