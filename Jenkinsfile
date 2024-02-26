@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage("Checkout") {
             steps {
-                git branch: ${params.Branch}, url: ${GIT_URL}
+                git branch: ${params.Branch}, url: "${GIT_URL}"
             }
         }
         stage("Test") {
