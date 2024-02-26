@@ -12,7 +12,7 @@ pipeline {
         stage("Build") {
             steps {
                 dir("TrailRunner") {
-                    sh("ls -la")
+                    sh("mvn clean compile")
                 }
             }
         }
