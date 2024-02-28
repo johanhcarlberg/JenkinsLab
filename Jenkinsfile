@@ -42,7 +42,7 @@ pipeline {
         stage("Run Robot") {
             steps {
                 dir("Selenium") {
-                    sh script: "robot --nostatusrc --outputdir results --variable browser:headlesschrome CarRentalTests.robot", returnStatus: true
+                    sh script: "robot --outputdir results --variable browser:headlesschrome CarRentalTests.robot", returnStatus: true
                 }
             }
             post {
