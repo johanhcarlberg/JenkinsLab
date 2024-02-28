@@ -42,7 +42,7 @@ pipeline {
         stage("Run Robot") {
             steps {
                 dir("Selenium") {
-                    sh script: "robot --nostatusrc --exclude expected-fail --outputdir results --variable browser:headlesschrome CarRentalTests.robot", returnStatus: true
+                    sh script: "robot --nostatusrc --skip expected-fail --outputdir results --variable browser:headlesschrome CarRentalTests.robot", returnStatus: true
                 }
             }
             post {
