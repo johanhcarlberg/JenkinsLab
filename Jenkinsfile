@@ -42,13 +42,13 @@ pipeline {
         stage("Run Robot") {
             steps {
                 dir("Selenium") {
-                    sh script: "robot --outputdir results --variable browser:headlesschrome CarRentalTests.robot", returnStatus: true
+                    sh script: "robot --nostatusrc --outputdir results --variable browser:headlesschrome CarRentalTests.robot", returnStatus: true
                 }
             }
             post {
                 always {
                     dir("Selenium") {
-                        robot outputPath: 'results', passThreshold: 80.0, unstableThreshold: 70.0, onlyCritical: false
+                        robot outputPath: 'results', passThreshold: 100.0, unstableThreshold: 100.0, onlyCritical: false
                     }
                 }
                 cleanup {
