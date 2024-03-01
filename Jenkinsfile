@@ -9,6 +9,7 @@ pipeline {
     stages {
         stage("Checkout") {
             steps {
+                sh 'echo Checking out: ${params.Branch}'
                 git branch: "${params.Branch}", url: "${GIT_URL}"
             }
         }
