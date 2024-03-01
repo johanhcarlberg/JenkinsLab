@@ -3,6 +3,9 @@ pipeline {
     environment {
         GIT_URL = 'https://github.com/johanhcarlberg/JenkinsLab'
     }
+    options {
+        skipDefaultCheckout()
+    }
     stages {
         stage("Checkout") {
             steps {
