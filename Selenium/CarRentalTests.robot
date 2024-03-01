@@ -273,11 +273,6 @@ Entering empty cvc code should display error
     AND User clicks confirm button
     THEN Cvc input should display error
 
-Debug fail test branch
-    [Documentation]    Test case that should always fail for testing branches in Jenkins
-    [Tags]    fail
-    Fail
-
 *** Keywords ***
 Open Chrome browser and maximize
     [Documentation]    Suite setup keyword for opening and maximizing chrome and setting selenium speed
