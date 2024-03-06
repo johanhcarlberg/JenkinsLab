@@ -3,6 +3,9 @@ pipeline {
     environment {
         GIT_URL = 'https://github.com/johanhcarlberg/JenkinsLab'
     }
+    parameters {
+        choice(name: 'Branch', choices: ["main","b1"], description: "Select branch to checkout")
+    }
     options {
         skipDefaultCheckout()
     }
