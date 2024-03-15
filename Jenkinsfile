@@ -22,6 +22,17 @@ pipeline {
                 }
             }
         }
+        stage("Analyze") {
+            steps {
+                dir("TrailRunner") {
+                    sh("mvn spotbugs:spotbugs")
+                    script {
+                        def spotBugs = scanForIssues tool: spotBugs(pattern: '**/target/spotbugsXml.xml', useRankAsPriority: true)
+                        publishIssues([spotBugs])
+                    }
+                }
+            }
+        }
         stage("Test") {
             steps {
                 dir("TrailRunner") {
