@@ -5,16 +5,9 @@ pipeline {
     }
     parameters {
         choice(name: 'Branch', choices: ["main","b1"], description: "Select branch to checkout")
-    }
-    options {
-        skipDefaultCheckout()
+        gitParameter branchFilter: 'origin/(.*)', defaultValue: 'main', name: 'BRANCH', type: 'PT_BRANCH'
     }
     stages {
-        stage("Checkout") {
-            steps {
-                git branch: "${params.Branch}", url: "${GIT_URL}"
-            }
-        }
         stage("Build") {
             steps {
                 dir("TrailRunner") {
