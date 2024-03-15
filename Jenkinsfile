@@ -25,9 +25,9 @@ pipeline {
         stage("Analyze") {
             steps {
                 dir("TrailRunner") {
+                    sh("mvn spotbugs:spotbugs")
                     script {
-                        sh("mvn spotbugs:spotbugs")
-                        def spotbugs = sscanForIssues tool: spotBugs(pattern: '**/target/spotBugsXml.xml', useRankAsPriority: true)
+                        def spotBugs = scanForIssues tool: spotBugs(pattern: '**/target/spotbugsXml.xml', useRankAsPriority: true)
                         publishIssues([spotBugs])
                     }
                 }
