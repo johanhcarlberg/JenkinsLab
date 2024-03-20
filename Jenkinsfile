@@ -21,7 +21,7 @@ pipeline {
                     def scmTriggerCause = currentBuild.getBuildCauses('hudson.triggers.SCMTrigger$SCMTriggerCause')
                 }
                 echo "${env.GIT_BRANCH}"
-                echo "${GIT_BRANCH}"
+                echo "${env.BRANCH_NAME}"
                 echo "${BRANCH_NAME}"
             }
         }
