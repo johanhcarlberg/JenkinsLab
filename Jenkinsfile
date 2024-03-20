@@ -12,18 +12,16 @@ pipeline {
     stages {
         stage("Checkout") {
             steps {
-                checkout scmGit(
-                    branches: [[name: "${params.BRANCH}"]],
-                    userRemoteConfigs: [[url: "${GIT_URL}"]])
-
                 script {
                     echo "${currentBuild.getBuildCauses()}"
                     def scmTriggerCause = currentBuild.getBuildCauses('hudson.triggers.SCMTrigger$SCMTriggerCause')
-                    echo "${env.GIT_BRANCH}"
-                    echo "${env.BRANCH_NAME}"
-                    echo "${GIT_BRANCH}"
-                    echo "${BRANCH_NAME}"
+                    branchName = sh(label: 'getBranchName', returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD').trim()
+                    println branchName
                 }
+                
+                checkout scmGit(
+                    branches: [[name: "${params.BRANCH}"]],
+                    userRemoteConfigs: [[url: "${GIT_URL}"]])
             }
         }
         stage("Build") {
