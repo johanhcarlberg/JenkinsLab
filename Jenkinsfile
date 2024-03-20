@@ -15,6 +15,7 @@ pipeline {
                 script {
                     echo "${currentBuild.getBuildCauses()}"
                     def isTriggeredByScm = !currentBuild.getBuildCauses('hudson.triggers.SCMTrigger$SCMTriggerCause').isEmpty()
+                    echo "Triggered by scm: ${isTriggeredByScm}"
                     if (isTriggeredByScm) {
                         checkout scmGit(
                             branches: [[name: "**"]],
