@@ -18,7 +18,9 @@ pipeline {
                     branchName = sh(label: 'getBranchName', returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD').trim()
                     println branchName
                 }
-                
+
+                echo "${scm.branches[0].name}"
+
                 checkout scmGit(
                     branches: [[name: "${params.BRANCH}"]],
                     userRemoteConfigs: [[url: "${GIT_URL}"]])
