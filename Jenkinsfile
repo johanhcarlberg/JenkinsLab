@@ -18,7 +18,9 @@ pipeline {
 
                 script {
                     echo "${currentBuild.getBuildCauses()}"
+                    def scmTriggerCause = currentBuild.getBuildCauses('hudson.triggers.SCMTrigger$SCMTriggerCause')
                 }
+                echo "${env.GIT_BRANCH}"
             }
         }
         stage("Build") {
