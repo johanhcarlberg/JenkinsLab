@@ -13,7 +13,6 @@ pipeline {
         stage("Checkout") {
             steps {
                 script {
-                    echo "${currentBuild.getBuildCauses()}"
                     def isTriggeredByScm = !currentBuild.getBuildCauses('hudson.triggers.SCMTrigger$SCMTriggerCause').isEmpty()
                     echo "Triggered by scm: ${isTriggeredByScm}"
                     if (isTriggeredByScm) {
