@@ -7,6 +7,11 @@ pipeline {
         gitParameter branchFilter: 'origin/(.*)', defaultValue: 'main', name: 'BRANCH', type: 'PT_BRANCH'
     }
     stages {
+        stage("Checkout") {
+            steps {
+                git url: "${GIT_URL}", branch: "${params.BRANCH}"
+            }
+        }
         stage("Build") {
             steps {
                 dir("TrailRunner") {
