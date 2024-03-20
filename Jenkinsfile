@@ -15,8 +15,6 @@ pipeline {
                 script {
                     echo "${currentBuild.getBuildCauses()}"
                     def scmTriggerCause = currentBuild.getBuildCauses('hudson.triggers.SCMTrigger$SCMTriggerCause')
-                    branchName = sh(label: 'getBranchName', returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD').trim()
-                    println branchName
                 }
 
                 echo "${scm.branches[0].name}"
