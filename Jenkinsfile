@@ -14,14 +14,17 @@ pipeline {
             steps {
                 script {
                     echo "${currentBuild.getBuildCauses()}"
-                    def scmTriggerCause = currentBuild.getBuildCauses('hudson.triggers.SCMTrigger$SCMTriggerCause')
+                    def isTriggeredByScm = !currentBuild.getBuildCauses('hudson.triggers.SCMTrigger$SCMTriggerCause').isEmpty()
+                    if (isTriggeredByScm) {
+                        checkout scmGit(
+                            branches: [[name: "**"]],
+                            userRemoteConfigs: [[url: "${GIT_URL}"]])
+                    } else {
+                        checkout scmGit(
+                            branches: [[name: "${params.BRANCH}"]],
+                            userRemoteConfigs: [[url: "${GIT_URL}"]])
+                    }
                 }
-
-                echo "${scm.branches[0].name}"
-
-                checkout scmGit(
-                    branches: [[name: "${params.BRANCH}"]],
-                    userRemoteConfigs: [[url: "${GIT_URL}"]])
             }
         }
         stage("Build") {
