@@ -15,9 +15,10 @@ pipeline {
                 checkout scmGit(
                     branches: [[name: "${params.BRANCH}"]],
                     userRemoteConfigs: [[url: "${GIT_URL}"]])
-            }
-            script {
-                echo "${currentBuild.getBuildCauses()}"
+
+                script {
+                    echo "${currentBuild.getBuildCauses()}"
+                }
             }
         }
         stage("Build") {
