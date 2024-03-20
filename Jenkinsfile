@@ -16,6 +16,9 @@ pipeline {
                     branches: [[name: "${params.BRANCH}"]],
                     userRemoteConfigs: [[url: "${GIT_URL}"]])
             }
+            script {
+                echo "${currentBuild.getBuildCauses()}"
+            }
         }
         stage("Build") {
             steps {
