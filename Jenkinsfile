@@ -6,10 +6,15 @@ pipeline {
     parameters {
         gitParameter branchFilter: 'origin/(.*)', defaultValue: 'main', name: 'BRANCH', type: 'PT_BRANCH'
     }
+    options {
+        skipDefaultCheckout()
+    }
     stages {
         stage("Checkout") {
             steps {
-                git url: "${GIT_URL}", branch: "${params.BRANCH}"
+                checkout scmGit(
+                    branches: [[name: "${params.BRANCH}"]],
+                    userRemoteConfigs: [[url: "${GIT_URL}"]])
             }
         }
         stage("Build") {
