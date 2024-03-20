@@ -17,9 +17,7 @@ pipeline {
                     def isTriggeredByScm = !currentBuild.getBuildCauses('hudson.triggers.SCMTrigger$SCMTriggerCause').isEmpty()
                     echo "Triggered by scm: ${isTriggeredByScm}"
                     if (isTriggeredByScm) {
-                        checkout scmGit(
-                            branches: [[name: "**"]],
-                            userRemoteConfigs: [[url: "${GIT_URL}"]])
+                        echo "Skipping checkout due to scm trigger"
                     } else {
                         checkout scmGit(
                             branches: [[name: "${params.BRANCH}"]],
