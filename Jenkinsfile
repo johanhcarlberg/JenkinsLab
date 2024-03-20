@@ -70,11 +70,6 @@ pipeline {
                         robot outputPath: 'results', passThreshold: 100.0, unstableThreshold: 100.0, onlyCritical: false
                     }
                 }
-                cleanup {
-                    dir("Selenium") {
-                        sh "rm -f results/*"
-                    }
-                }
             }
         }
     }
