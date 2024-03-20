@@ -67,6 +67,10 @@ ${cvcCode}    123
 ${myPageUrl}    http://rental14.infotiv.net/webpage/html/gui/myPage.php
 
 *** Test Cases ***
+Explicit fail test
+    [Documentation]    Test that should always fail
+    Fail
+
 End-to-end car rental
     [Documentation]    Test case for the entire flow from start page to renting a car
     [Tags]    end-to-end    car-rental    VG_test
